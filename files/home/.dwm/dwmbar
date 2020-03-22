@@ -50,22 +50,13 @@ dwm_brightness() {
    echo "$SEP1 BR $BRIGHTNESS_PERCENTAGE% $SEP2"
 }
 
-### CPU MODULE ###
-dwm_cpu() {
-   CPU_TEMPERATURE=$(sensors | head -n 3 | tail -n 1 | awk '{ print $4 }')
-   CPU_PERCENTAGE=$(top -bn 1 | head -n 3 | tail -n 1 | awk '{ print 100-$8}')
-   CPU_PERCENTAGE=${CPU_PERCENTAGE%.*}
-
-   echo "$SEP1 CPU $CPU_PERCENTAGE% $CPU_TEMPERATURE $SEP2"
-}
-
 ### MEMORY MODULE ###
 dwm_memory() {
-   RAM_MAX=$(top -bn 1 | grep "MiB Mem" | awk '{ print $4 }')
+   RAM_MAX=$(free -m | head -n 2 | tail -n 1 | awk '{ print $2 }')
    RAM_MAX=${RAM_MAX%.*}
-   RAM_CURRENT=$(top -bn 1 | grep "MiB Mem" | awk '{ print $8 }')
-   RAM_CURRENT=${RAM_CURRENT%.*}
-   RAM_PERCENTAGE=$(($RAM_CURRENT * 100 / $RAM_MAX))
+   RAM_USED=$(free -m | head -n 2 | tail -n 1 | awk '{ print $3 }')
+   RAM_USED=${RAM_USED%.*}
+   RAM_PERCENTAGE=$(($RAM_USED * 100 / $RAM_MAX))
 
    echo "$SEP1 MEM $RAM_PERCENTAGE% $SEP2"
 }
@@ -79,14 +70,30 @@ dwm_fan() {
 
 ### VOLUME MODULE ###
 dwm_volume() {
-   VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' |     head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+   MUTE=$(pactl list sinks | grep Mute | awk '{ print $2 }')
+   VOLUME=$(pactl list sinks | grep Volume | head -n 1 | awk '{ print $5 }')
 
-   echo "$SEP1 VOL $VOLUME% $SEP2"
+   TAG=""
+   if [ $MUTE = "yes" ];
+   then
+     TAG="mute"
+   else
+     TAG=$VOLUME
+   fi
+
+   echo "$SEP1 VOL $TAG $SEP2"
 }
 
-### MAIN MODULE ###
+### CPU MODULE ###
+dwm_cpu() {
+  CPU=$(sensors | head -n 3 | tail -n 1 | awk '{ print $4 }')
+
+  echo "$SEP1 CPU $CPU $SEP2"
+}
+
+### MAIN LOOP ###
 while true;
 do
-   xsetroot -name " $(dwm_memory)$(dwm_cpu)$(dwm_wlan)$(dwm_brightness)$(dwm_battery)$(dwm_volume)$(dwm_time)"
-   sleep $SLP
+  xsetroot -name " $(dwm_memory)$(dwm_cpu)$(dwm_wlan)$(dwm_brightness)$(dwm_battery)$(dwm_volume)$(dwm_time)"
+  sleep $SLP
 done &
