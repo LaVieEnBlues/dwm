@@ -6,7 +6,12 @@ static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
+static const char *fonts[]          = { "Fixedsys Excelsior:style=Regular:size=10:antialias=true",
+                                        "ProggySquareTT:style=Regular:size=11:antialias=false",
+                                        "CodingFontTobi:style=Regular:size=11:antialias=false",
+                                        "PixelCarnageMono:style=Regular:size=11:antialias=false",
+                                        "Font Awesome 5 Free:style=Regular:size=12:antialias=true",
+                                        "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -34,7 +39,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -60,8 +65,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *vifmcmd[] = { "st", "-e", "vifm" };
-static const char *nmtuicmd[] = { "st", "-e", "nmtui" };
+static const char *vifmcmd[] = { "st", "-e", "vifm", NULL };
+static const char *nmtuicmd[] = { "st", "-e", "nmtui", NULL };
 static const char *firefox[] = { "firefox", NULL };
 
 static const char *volup[] = { "pactl", "set-sink-volume", "0", "+5%", NULL };
@@ -116,10 +121,6 @@ static Key keys[] = {
 	{ 0,          XF86XK_AudioLowerVolume,     spawn,          {.v = voldown } },
 	{ 0,          XF86XK_AudioMute,            spawn,          {.v = volmute } },
 	{ 0,          XF86XK_AudioMicMute,         spawn,          {.v = micmute } },
-//	{ MODKEY,          XK_F11,     spawn,          {.v = volup } },
-//	{ MODKEY,          XK_F10,     spawn,          {.v = voldown } },
-//	{ MODKEY,          XK_F9,            spawn,          {.v = volmute } },
-//	{ MODKEY,          XK_F12,         spawn,          {.v = micmute } },
 };
 
 /* button definitions */

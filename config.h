@@ -6,7 +6,11 @@ static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "CodingFontTobi:style=Regular:size=11:antialias=false",
+static const char *fonts[]          = { "Fixedsys Excelsior:style=Regular:size=10:antialias=true",
+                                        "ProggySquareTT:style=Regular:size=11:antialias=false",
+                                        "CodingFontTobi:style=Regular:size=11:antialias=false",
+                                        "PixelCarnageMono:style=Regular:size=11:antialias=false",
+                                        "Font Awesome 5 Free:style=Regular:size=12:antialias=true",
                                         "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
@@ -81,8 +85,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-  { MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-  { MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+   { MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+   { MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
